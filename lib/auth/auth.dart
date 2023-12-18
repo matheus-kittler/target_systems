@@ -1,23 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:target_challenge/presentation/home_page.dart';
+import 'package:target_challenge/presentation/login_page.dart';
 
-class Auth {
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+class AuthPage extends StatelessWidget {
+  const AuthPage({super.key});
 
-  User? get currentUser => firebaseAuth.currentUser;
-
-  Stream<User?> get authStateChanges => firebaseAuth.authStateChanges();
-
-  Future<void> signIn({
-    required String email,
-    required String password,
-  }) async {
-    await firebaseAuth.signInWithEmailAndPassword(
-      email: email,
-      password: password,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return const HomePage();
+          } else {
+            return const LoginPage();
+          }
+        },
+      ),
     );
-  }
-
-  Future<void> signOut() async {
-    await firebaseAuth.signOut();
   }
 }

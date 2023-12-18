@@ -9,40 +9,20 @@ part of 'login_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$LoginController on LoginControllerBase, Store {
-  Computed<bool>? _$checkEmailComputed;
+  Computed<bool>? _$caractersLenghtComputed;
 
   @override
-  bool get checkEmail =>
-      (_$checkEmailComputed ??= Computed<bool>(() => super.checkEmail,
-              name: 'LoginControllerBase.checkEmail'))
+  bool get caractersLenght =>
+      (_$caractersLenghtComputed ??= Computed<bool>(() => super.caractersLenght,
+              name: 'LoginControllerBase.caractersLenght'))
           .value;
-  Computed<bool>? _$checkPasswordComputed;
+  Computed<bool>? _$isEmptyEmailComputed;
 
   @override
-  bool get checkPassword =>
-      (_$checkPasswordComputed ??= Computed<bool>(() => super.checkPassword,
-              name: 'LoginControllerBase.checkPassword'))
+  bool get isEmptyEmail =>
+      (_$isEmptyEmailComputed ??= Computed<bool>(() => super.isEmptyEmail,
+              name: 'LoginControllerBase.isEmptyEmail'))
           .value;
-  Computed<bool>? _$checkCaractersLenghtComputed;
-
-  @override
-  bool get checkCaractersLenght => (_$checkCaractersLenghtComputed ??=
-          Computed<bool>(() => super.checkCaractersLenght,
-              name: 'LoginControllerBase.checkCaractersLenght'))
-      .value;
-  Computed<bool>? _$passwordIsValidComputed;
-
-  @override
-  bool get passwordIsValid =>
-      (_$passwordIsValidComputed ??= Computed<bool>(() => super.passwordIsValid,
-              name: 'LoginControllerBase.passwordIsValid'))
-          .value;
-  Computed<bool>? _$isValidComputed;
-
-  @override
-  bool get isValid => (_$isValidComputed ??= Computed<bool>(() => super.isValid,
-          name: 'LoginControllerBase.isValid'))
-      .value;
 
   late final _$emailAtom =
       Atom(name: 'LoginControllerBase.email', context: context);
@@ -102,15 +82,34 @@ mixin _$LoginController on LoginControllerBase, Store {
   }
 
   @override
+  dynamic validatePassword(String text) {
+    final _$actionInfo = _$LoginControllerBaseActionController.startAction(
+        name: 'LoginControllerBase.validatePassword');
+    try {
+      return super.validatePassword(text);
+    } finally {
+      _$LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic validateEmail(String text) {
+    final _$actionInfo = _$LoginControllerBaseActionController.startAction(
+        name: 'LoginControllerBase.validateEmail');
+    try {
+      return super.validateEmail(text);
+    } finally {
+      _$LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 email: ${email},
 password: ${password},
-checkEmail: ${checkEmail},
-checkPassword: ${checkPassword},
-checkCaractersLenght: ${checkCaractersLenght},
-passwordIsValid: ${passwordIsValid},
-isValid: ${isValid}
+caractersLenght: ${caractersLenght},
+isEmptyEmail: ${isEmptyEmail}
     ''';
   }
 }

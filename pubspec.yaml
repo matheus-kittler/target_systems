@@ -23,6 +23,7 @@ dependencies:
   get: ^4.6.6
   mobx_codegen: ^2.4.0
   build_runner: ^2.3.3
+  url_launcher: ^6.2.2
 
 
 dev_dependencies:

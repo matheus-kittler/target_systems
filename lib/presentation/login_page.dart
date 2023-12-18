@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
-import 'package:target_challenge/auth/auth.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:target_challenge/controllers/login_controller.dart';
-import 'package:target_challenge/if_debugging.dart';
-import 'package:target_challenge/main.dart';
-import 'package:target_challenge/widgets/custom_text_field.dart';
+import 'package:target_challenge/widgets/custom_text_field_email.dart';
+import 'package:target_challenge/widgets/custom_text_field_password.dart';
 import 'package:target_challenge/widgets/gradient_background.dart';
 
 class LoginPage extends StatefulWidget {
@@ -24,28 +21,31 @@ class LoginPageState extends State<LoginPage> {
   Color secundaryColor = const Color(0xFF0074CC);
   String userTitle = 'Usuário';
   String passwordTitle = 'Senha';
+  String enter = 'Entrar';
+  String policy = 'Política de Privacidade';
+  String site = 'https://google.com.br/';
   String? errorMessage = '';
   Icon userIcon = const Icon(Icons.person);
   Icon passwordIcon = const Icon(Icons.lock);
+  bool isValid = false;
 
   final TextEditingController controllerEmail = TextEditingController();
   final TextEditingController controllerPassword = TextEditingController();
 
-  Future<void> signIn() async {
-    try {
-      await Auth().signIn(
-          email: controllerEmail.text, password: controllerPassword.text);
-    } on FirebaseAuthException catch (e) {
-      setState(() {
-        errorMessage = e.message;
-      });
-    }
-  }
+  // Future<void> signIn() async {
+  //   try {
+  //     await Auth().signIn(
+  //         email: controllerEmail.text, password: controllerPassword.text);
+  //   } on FirebaseAuthException catch (e) {
+  //     setState(() {
+  //       errorMessage = e.message;
+  //     });
+  //   }
+  // }
 
-  void validateTextField() {
-    if (formKey.currentState!.validate()) {
-      loginController.isValid;
-    }
+  void signUserIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: controllerEmail.text, password: controllerPassword.text);
   }
 
   @override
@@ -60,57 +60,67 @@ class LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Observer(builder: (_) {
-                  return CustomTextField(
-                    controller: TextEditingController(),
-                    onChanged: (_) {},
-                    title: userTitle,
-                    icon: userIcon,
-                    checkTextField: loginController.isValid,
-                    color:
-                        loginController.checkEmail ? Colors.red : Colors.white,
-                  );
-                }),
-                const SizedBox(height: 16.0),
-                Observer(builder: (_) {
-                  return CustomTextField(
-                    controller: TextEditingController(),
-                    onChanged: (_) {},
-                    title: passwordTitle,
-                    icon: passwordIcon,
-                    checkTextField: loginController.isValid,
-                    color: loginController.checkPassword
-                        ? Colors.red
-                        : Colors.white,
-                  );
-                }),
-                const SizedBox(height: 24.0),
-                ElevatedButton(
-                  onPressed: () {
-                    // final email = emailController.text;
-                    // final password = passwordController.text;
-                    // context.read<MyApp>().goTo()
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF28A745),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                Expanded(
+                    child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomTextFieldEmail(
+                      title: userTitle,
+                      icon: userIcon,
+                      controller: controllerEmail,
                     ),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 12.0,
-                      horizontal: 24.0,
+                    const SizedBox(height: 16.0),
+                    CustomTextFieldPassword(
+                      title: passwordTitle,
+                      icon: passwordIcon,
+                      controller: controllerPassword,
                     ),
-                    child: Text(
-                      'Entrar',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
+                    const SizedBox(height: 24.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        signUserIn();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF28A745),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: 24.0,
+                        ),
+                        child: Text(
+                          enter,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                          ),
+                        ),
                       ),
                     ),
+                  ],
+                )),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: InkWell(
+                    child: Text(
+                      policy,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onTap: () async {
+                      final url = site;
+
+                      if (await canLaunchUrl(url as Uri)) {
+                        await launch(url);
+                      }
+                    },
                   ),
-                ),
+                )
               ],
             ),
           ),
