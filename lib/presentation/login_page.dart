@@ -5,6 +5,7 @@ import 'package:mobx/mobx.dart';
 import 'package:target_challenge/auth/auth.dart';
 import 'package:target_challenge/controllers/login_controller.dart';
 import 'package:target_challenge/if_debugging.dart';
+import 'package:target_challenge/main.dart';
 import 'package:target_challenge/widgets/custom_text_field.dart';
 import 'package:target_challenge/widgets/gradient_background.dart';
 
@@ -86,9 +87,9 @@ class LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 24.0),
                 ElevatedButton(
                   onPressed: () {
-                    final email = emailController.text;
-                    final password = passwordController.text;
-                    // context.read<>().login
+                    // final email = emailController.text;
+                    // final password = passwordController.text;
+                    // context.read<MyApp>().goTo()
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF28A745),
