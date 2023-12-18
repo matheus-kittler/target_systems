@@ -1,0 +1,36 @@
+name: target_challenge
+description: "The project challenge target systems"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  firebase_core: ^2.24.2
+  firebase_database: ^10.3.8 
+  firebase_auth: ^4.15.2
+  flutter_bloc: ^8.1.2
+  equatable: ^2.0.3
+  flow_builder: ^0.0.6
+  mobx: ^2.2.3
+  flutter_mobx: ^2.0.6+5
+  get: ^4.6.6
+  mobx_codegen: ^2.4.0
+  build_runner: ^2.3.3
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.1
+
+flutter:
+
+  uses-material-design: true
