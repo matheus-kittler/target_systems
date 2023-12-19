@@ -1,8 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:target_challenge/widgets/gradient_background.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+
+  final user = FirebaseAuth.instance.currentUser!;
+
+  void signUserOut() {
+    FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +20,8 @@ class HomePage extends StatelessWidget {
       body: GradientBackground(
           primaryColor: primeColor,
           secondColor: secundaryColor,
-          widget: const Center(
-            child: Text('Olá mundo'),
+          widget: Center(
+            child: FloatingActionButton(onPressed: signUserOut),
           )),
     );
   }

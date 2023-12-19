@@ -32,20 +32,56 @@ class LoginPageState extends State<LoginPage> {
   final TextEditingController controllerEmail = TextEditingController();
   final TextEditingController controllerPassword = TextEditingController();
 
-  // Future<void> signIn() async {
-  //   try {
-  //     await Auth().signIn(
-  //         email: controllerEmail.text, password: controllerPassword.text);
-  //   } on FirebaseAuthException catch (e) {
-  //     setState(() {
-  //       errorMessage = e.message;
-  //     });
-  //   }
-  // }
-
   void signUserIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: controllerEmail.text, password: controllerPassword.text);
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        });
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: controllerEmail.text,
+        password: controllerPassword.text,
+      );
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      if (e.code == 'user-not-found') {
+        errorLogin('Not found user for that e-mail');
+      } else if (e.code == 'wrong-password') {
+        errorLogin('The password is not correct');
+      } else if (e.code == 'invalid-credential') {
+        errorLogin('The e-mail or/and password is not correct.');
+      }
+    }
+  }
+
+  void errorLogin(String text) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return FutureBuilder(
+          future: Future.delayed(Duration(seconds: 5)).then((value) => true),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              Navigator.of(context).pop();
+            }
+
+            return AlertDialog(
+              backgroundColor: Colors.red,
+              title: Center(
+                  child: Text(
+                text,
+                style: TextStyle(color: Colors.white),
+              )),
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
