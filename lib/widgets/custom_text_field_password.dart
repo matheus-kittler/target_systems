@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:target_challenge/assets/constants.dart';
 
 class CustomTextFieldPassword extends StatelessWidget {
   final String title;
@@ -15,6 +16,18 @@ class CustomTextFieldPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Colors
+    Color colorError = const Color.fromARGB(255, 255, 157, 0);
+    Color colorErrorBorder = Colors.red;
+    Color colorStandard = Colors.white;
+    Color colorWhite = const Color(0xffE5E5E5);
+    //Strings
+    String passwordError = Constants.PASSWORD_ERROR;
+    String passwordMinimum = Constants.PASSWORD_MINIMUM;
+    //Mesuare
+    double radius = 4;
+    double width = 1;
+
     return Column(
       children: [
         Align(
@@ -22,8 +35,8 @@ class CustomTextFieldPassword extends StatelessWidget {
           child: Text(
             title,
             textAlign: TextAlign.start,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: colorStandard,
               fontSize: 16.0,
             ),
           ),
@@ -40,9 +53,9 @@ class CustomTextFieldPassword extends StatelessWidget {
           validator: (value) {
             if (value != null) {
               if (value.isEmpty) {
-                return 'Digite sua senha';
+                return passwordError;
               } else if (value.length < 2) {
-                return 'Sua senha precisa ter no mínimo 2 caracteres';
+                return passwordMinimum;
               } else {
                 return null;
               }
@@ -50,11 +63,12 @@ class CustomTextFieldPassword extends StatelessWidget {
           },
           autofocus: false,
           decoration: InputDecoration(
+            errorStyle: TextStyle(color: colorError),
             prefixIcon: icon,
             errorMaxLines: 3,
-            counterText: "",
+            counterText: '',
             filled: true,
-            fillColor: Colors.white,
+            fillColor: colorStandard,
             focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(4)),
               borderSide: BorderSide(
@@ -62,37 +76,37 @@ class CustomTextFieldPassword extends StatelessWidget {
                 color: Color(0xffE5E5E5),
               ),
             ),
-            disabledBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(radius)),
               borderSide: BorderSide(
-                width: 1,
-                color: Color(0xffE5E5E5),
+                width: width,
+                color: colorWhite,
               ),
             ),
-            enabledBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(radius)),
               borderSide: BorderSide(
-                width: 1,
-                color: Color(0xffE5E5E5),
+                width: width,
+                color: colorWhite,
               ),
             ),
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(radius)),
               borderSide: BorderSide(
-                width: 1,
+                width: width,
               ),
             ),
-            errorBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(4)),
+            errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(radius)),
                 borderSide: BorderSide(
-                  width: 1,
-                  color: Colors.red,
+                  width: width,
+                  color: colorErrorBorder,
                 )),
-            focusedErrorBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(radius)),
               borderSide: BorderSide(
-                width: 1,
-                color: Colors.red,
+                width: width,
+                color: colorErrorBorder,
               ),
             ),
           ),

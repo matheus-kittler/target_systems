@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:target_challenge/widgets/custom_text_field_email.dart';
 import 'package:target_challenge/widgets/custom_text_field_password.dart';
 import 'package:target_challenge/widgets/gradient_background.dart';
-
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:target_challenge/assets/constants.dart';
+import 'package:target_challenge/widgets/launch_url.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,22 +14,33 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  final formKey = GlobalKey<FormState>();
-
+  //Colors
   Color primeColor = const Color(0xFF001F3F);
   Color secundaryColor = const Color(0xFF0074CC);
-  String userTitle = 'Usuário';
-  String passwordTitle = 'Senha';
-  String enter = 'Entrar';
-  String policy = 'Política de Privacidade';
-  String site = 'https://google.com.br/';
-  String? errorMessage = '';
-  Icon userIcon = const Icon(Icons.person);
-  Icon passwordIcon = const Icon(Icons.lock);
-  bool isValid = false;
-
+  Color errorBackground = Colors.red;
+  Color colorWhiteText = Colors.white;
+  Color colorBackgroundButton = const Color(0xFF28A745);
+  //Strings
+  String userTitle = Constants.USER;
+  String passwordTitle = Constants.PASSWORD;
+  String enter = Constants.ENTER;
+  String policy = Constants.POLICY_PRIVACY;
+  String url = Constants.URL;
+  String invalidCredential = Constants.INVALID_CREDENTIAL;
+  String invalidEmail = Constants.INVALID_EMAIL;
+  String invalidCredentialMsg = Constants.INVALID_CREDENTIAL_MSG;
+  String invalidEmailMsg = Constants.INVALID_CREDENTIAL_MSG;
   final TextEditingController controllerEmail = TextEditingController();
   final TextEditingController controllerPassword = TextEditingController();
+  //Icons
+  Icon userIcon = const Icon(Icons.person);
+  Icon passwordIcon = const Icon(Icons.lock);
+  //Mesuare
+  double size_12 = 12;
+  double size_16 = 16;
+  double size_18 = 18;
+  double size_20 = 20;
+  double size_24 = 24;
 
   void signUserIn() async {
     showDialog(
@@ -48,12 +59,10 @@ class LoginPageState extends State<LoginPage> {
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
-      if (e.code == 'user-not-found') {
-        errorLogin('Not found user for that e-mail');
-      } else if (e.code == 'wrong-password') {
-        errorLogin('The password is not correct');
-      } else if (e.code == 'invalid-credential') {
-        errorLogin('The e-mail or/and password is not correct.');
+      if (e.code == invalidCredential) {
+        errorLogin(invalidCredentialMsg);
+      } else if (e.code == invalidEmail) {
+        errorLogin(invalidEmailMsg);
       }
     }
   }
@@ -71,26 +80,17 @@ class LoginPageState extends State<LoginPage> {
             }
 
             return AlertDialog(
-              backgroundColor: Colors.red,
+              backgroundColor: errorBackground,
               title: Center(
                   child: Text(
                 text,
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(color: colorWhiteText),
               )),
             );
           },
         );
       },
     );
-  }
-
-  launchURL() async {
-    const url = 'google.com.br';
-    if (await canLaunchUrlString(url)) {
-      await launchUrlString(url);
-    } else {
-      throw 'Could not launch $url';
-    }
   }
 
   @override
@@ -101,7 +101,7 @@ class LoginPageState extends State<LoginPage> {
         secondColor: secundaryColor,
         widget: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(size_16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -114,58 +114,55 @@ class LoginPageState extends State<LoginPage> {
                       icon: userIcon,
                       controller: controllerEmail,
                     ),
-                    const SizedBox(height: 16.0),
+                    SizedBox(height: size_16),
                     CustomTextFieldPassword(
                       title: passwordTitle,
                       icon: passwordIcon,
                       controller: controllerPassword,
                     ),
-                    const SizedBox(height: 24.0),
+                    SizedBox(height: size_24),
                     ElevatedButton(
                       onPressed: () {
                         signUserIn();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF28A745),
+                        backgroundColor: colorBackgroundButton,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
+                          borderRadius: BorderRadius.circular(size_20),
                         ),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 12.0,
-                          horizontal: 24.0,
+                        padding: EdgeInsets.symmetric(
+                          vertical: size_12,
+                          horizontal: size_24,
                         ),
                         child: Text(
                           enter,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 18.0,
+                          style: TextStyle(
+                            color: colorWhiteText,
+                            fontSize: size_18,
                           ),
                         ),
                       ),
                     ),
                   ],
                 )),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: InkWell(
-                    child: Text(
-                      policy,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                    onTap: () async {
-                      // final url = site;
-                      launchURL();
-                      // if (await canLaunchUrl(url as Uri)) {
-                      //   await launch(url);
-                      // }
-                    },
-                  ),
-                )
+                LaunchUrl(text: policy, url: url)
+                // Align(
+                //   alignment: Alignment.bottomCenter,
+                //   child: InkWell(
+                //     child: Text(
+                //       policy,
+                //       style: TextStyle(
+                //         fontSize: size_16,
+                //         color: colorWhiteText,
+                //       ),
+                //     ),
+                //     onTap: () async {
+                //       launchURL();
+                //     },
+                //   ),
+                // )
               ],
             ),
           ),
