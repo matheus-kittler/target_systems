@@ -1,11 +1,11 @@
-import 'package:mobx/mobx.dart';
+// import 'package:mobx/mobx.dart';
 
-part 'login_controller.g.dart';
+// part 'home_controller.g.dart';
 
-class LoginController = LoginControllerBase with _$LoginController;
+// class HomeController = LoginControllerBase with _$HomeController;
 
-abstract class LoginControllerBase with Store {
-  // @observable
+// abstract class HomeControllerBase with Store {
+//   // @observable
   // String email = '';
   // @observable
   // String password = '';
@@ -39,23 +39,23 @@ abstract class LoginControllerBase with Store {
   // @computed
   // bool get isValid => passwordIsValid && checkEmail;
 
-  @observable
-  String email = '';
-  @observable
-  String password = '';
+  // @observable
+  // String email = '';
+  // @observable
+  // String password = '';
 
-  @action
-  void setEmail(String value) => email = value;
-  @action
-  void setPassword(String value) => password = value;
-  @action
-  validatePassword(String text) {}
+  // @action
+  // void setEmail(String value) => email = value;
+  // @action
+  // void setPassword(String value) => password = value;
+  // @action
+  // validatePassword(String text) {}
 
-  @action
-  validateEmail(String text) {}
+  // @action
+  // validateEmail(String text) {}
 
-  @computed
-  bool get caractersLenght => password.length >= 2;
-  @computed
-  bool get isEmptyEmail => email.isEmpty;
-}
+  // @computed
+  // bool get caractersLenght => password.length >= 2;
+  // @computed
+  // bool get isEmptyEmail => email.isEmpty;
+// }

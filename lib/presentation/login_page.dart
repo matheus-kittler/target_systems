@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:target_challenge/controllers/login_controller.dart';
 import 'package:target_challenge/widgets/custom_text_field_email.dart';
 import 'package:target_challenge/widgets/custom_text_field_password.dart';
 import 'package:target_challenge/widgets/gradient_background.dart';
+
+import 'package:url_launcher/url_launcher_string.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,7 +14,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  final loginController = LoginController();
   final formKey = GlobalKey<FormState>();
 
   Color primeColor = const Color(0xFF001F3F);
@@ -64,7 +63,8 @@ class LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) {
         return FutureBuilder(
-          future: Future.delayed(Duration(seconds: 5)).then((value) => true),
+          future:
+              Future.delayed(const Duration(seconds: 3)).then((value) => true),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               Navigator.of(context).pop();
@@ -75,13 +75,22 @@ class LoginPageState extends State<LoginPage> {
               title: Center(
                   child: Text(
                 text,
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               )),
             );
           },
         );
       },
     );
+  }
+
+  launchURL() async {
+    const url = 'google.com.br';
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -149,11 +158,11 @@ class LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     onTap: () async {
-                      final url = site;
-
-                      if (await canLaunchUrl(url as Uri)) {
-                        await launch(url);
-                      }
+                      // final url = site;
+                      launchURL();
+                      // if (await canLaunchUrl(url as Uri)) {
+                      //   await launch(url);
+                      // }
                     },
                   ),
                 )
