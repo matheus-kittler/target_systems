@@ -148,21 +148,6 @@ class LoginPageState extends State<LoginPage> {
                   ],
                 )),
                 LaunchUrl(text: policy, url: url)
-                // Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child: InkWell(
-                //     child: Text(
-                //       policy,
-                //       style: TextStyle(
-                //         fontSize: size_16,
-                //         color: colorWhiteText,
-                //       ),
-                //     ),
-                //     onTap: () async {
-                //       launchURL();
-                //     },
-                //   ),
-                // )
               ],
             ),
           ),
