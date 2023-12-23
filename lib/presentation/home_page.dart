@@ -226,7 +226,7 @@ class HomePageState extends State<HomePage> {
             children: [
               InkWell(
                   onTap: () {
-                    noteController.text = notes[index].text;
+                    notes[index].text = noteController.text;
                     setState(() {
                       selectedIndex = index;
                     });
