@@ -56,15 +56,19 @@ class LoginPageState extends State<LoginPage> {
         email: controllerEmail.text,
         password: controllerPassword.text,
       );
-      Navigator.pop(context);
+      pop();
     } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
+      pop();
       if (e.code == invalidCredential) {
         errorLogin(invalidCredentialMsg);
       } else if (e.code == invalidEmail) {
         errorLogin(invalidEmailMsg);
       }
     }
+  }
+
+  pop() {
+    Navigator.pop(context);
   }
 
   void errorLogin(String text) {

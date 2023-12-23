@@ -13,13 +13,13 @@ mixin _$HomeController on HomeControllerBase, Store {
       Atom(name: 'HomeControllerBase.list', context: context);
 
   @override
-  List<Note> get list {
+  ObservableList<dynamic> get list {
     _$listAtom.reportRead();
     return super.list;
   }
 
   @override
-  set list(List<Note> value) {
+  set list(ObservableList<dynamic> value) {
     _$listAtom.reportWrite(value, super.list, () {
       super.list = value;
     });
@@ -40,11 +40,46 @@ mixin _$HomeController on HomeControllerBase, Store {
   }
 
   @override
-  void saveListPreferences() {
+  void deleteItemList(int index) {
     final _$actionInfo = _$HomeControllerBaseActionController.startAction(
-        name: 'HomeControllerBase.saveListPreferences');
+        name: 'HomeControllerBase.deleteItemList');
     try {
-      return super.saveListPreferences();
+      return super.deleteItemList(index);
+    } finally {
+      _$HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void editItemList(int index, Note note) {
+    final _$actionInfo = _$HomeControllerBaseActionController.startAction(
+        name: 'HomeControllerBase.editItemList');
+    try {
+      return super.editItemList(index, note);
+    } finally {
+      _$HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic validateTextFilled(String text) {
+    final _$actionInfo = _$HomeControllerBaseActionController.startAction(
+        name: 'HomeControllerBase.validateTextFilled');
+    try {
+      return super.validateTextFilled(text);
+    } finally {
+      _$HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void customAlertDialog(String text, BuildContext context,
+      Color colorBackground, Color basedColor) {
+    final _$actionInfo = _$HomeControllerBaseActionController.startAction(
+        name: 'HomeControllerBase.customAlertDialog');
+    try {
+      return super
+          .customAlertDialog(text, context, colorBackground, basedColor);
     } finally {
       _$HomeControllerBaseActionController.endAction(_$actionInfo);
     }

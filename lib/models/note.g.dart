@@ -39,6 +39,17 @@ mixin _$Note on NoteBase, Store {
   }
 
   @override
+  Map<String?, String?> toJson() {
+    final _$actionInfo =
+        _$NoteBaseActionController.startAction(name: 'NoteBase.toJson');
+    try {
+      return super.toJson();
+    } finally {
+      _$NoteBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 title: ${title}

@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,44 +9,90 @@ part 'home_controller.g.dart';
 class HomeController = HomeControllerBase with _$HomeController;
 
 abstract class HomeControllerBase with Store {
-  Completer<SharedPreferences> instance = Completer<SharedPreferences>();
   late SharedPreferences shared;
   String data = Constants.DATA;
+  String filledField = Constants.FILLED_FIELD;
 
-  // init() async {
-  //   instance.complete(await SharedPreferences.getInstance());
-  // }
+  getSharedPreferences() async {
+    shared = await SharedPreferences.getInstance();
+    readFromSharedPreferences();
+  }
 
-  // HomeControllerBase() {
-  //   init();
-  //   getSharedPreferences();
-  // }
+  readFromSharedPreferences() {
+    list.clear();
+    List<String>? noteListString = shared.getStringList(data);
+    if (noteListString != null) {
+      for (var i = 0; i < noteListString.length; i++) {
+        list.add(noteListString[i]);
+      }
+    }
+  }
+
+  void saveListPreferences() async {
+    List<String> notetListString = list.cast<String>().toList();
+    await shared.setStringList(data, notetListString);
+  }
+
+  HomeControllerBase() {
+    getSharedPreferences();
+  }
 
   @observable
-  List<Note> list = [];
+  ObservableList list = [].asObservable();
   @action
   addList(Note note) {
-    list = List.from(list..add(note));
+    list.add(note.title);
+    saveListPreferences();
   }
 
   @action
-  void saveListPreferences() {
-    SharedPreferences.getInstance().then((instance) {
-      List<String> notetListString = list.cast<String>().toList();
-      shared.setStringList(data, notetListString);
-    });
+  void deleteItemList(int index) {
+    list.removeAt(index);
+    saveListPreferences();
   }
 
-  // getSharedPreferences() async {
-  //   init();
-  //   readFromSharedPreferences();
-  // }
+  @action
+  void editItemList(int index, Note note) {
+    list[index].add('${note.title}');
+    // note.title = list[index].title.toString();
+    // list[index].insert(note.title);
+    saveListPreferences();
+  }
 
-  // @action
-  // readFromSharedPreferences() {
-  //   List<String>? noteListString = shared.getStringList(data);
-  //   if (noteListString != null) {
-  //     list = noteListString.map((note) => list[0]).toList();
-  //   }
-  // }
+  @action
+  validateTextFilled(String text) {
+    if (text.isNotEmpty) {
+      return null;
+    } else {
+      return filledField;
+    }
+  }
+
+  @action
+  void customAlertDialog(String text, BuildContext context,
+      Color colorBackground, Color basedColor) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return FutureBuilder(
+          future:
+              Future.delayed(const Duration(seconds: 3)).then((value) => true),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              Navigator.of(context).pop();
+            }
+
+            return AlertDialog(
+              backgroundColor: colorBackground,
+              title: Center(
+                  child: Text(
+                text,
+                style: TextStyle(color: basedColor),
+              )),
+            );
+          },
+        );
+      },
+    );
+  }
 }

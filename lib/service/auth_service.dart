@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:target_challenge/auth/auth_error.dart';
+import 'package:target_challenge/service/auth/auth_error.dart';
 
 abstract class AuthService {
   String? get userId;

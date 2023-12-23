@@ -23,4 +23,13 @@ abstract class NoteBase with Store {
   String? title;
   @action
   setText(String value) => title = value;
+
+  factory NoteBase.fromJson(Map<String, dynamic> json) => Note(
+        title: json['text'],
+      );
+
+  @action
+  Map<String?, String?> toJson() => {
+        'text': title,
+      };
 }

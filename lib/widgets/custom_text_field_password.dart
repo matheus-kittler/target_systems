@@ -60,6 +60,7 @@ class CustomTextFieldPassword extends StatelessWidget {
                 return null;
               }
             }
+            return null;
           },
           autofocus: false,
           decoration: InputDecoration(
