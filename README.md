@@ -1,6 +1,8 @@
 
 # target_systems
 
+O teste com todas as especificações abaixo estão na branch 'mobx', a main é apenas uma branch simplesta do desafio, não contendo o gerenciamento de estado exigido.
+
 ## Tela de login
 
 Uma tela de autenticação onde o usuário é obrigado a digitar seu login e senha
