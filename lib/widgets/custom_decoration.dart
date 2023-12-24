@@ -13,6 +13,7 @@ class CustomDecorationFormField {
       errorStyle: TextStyle(color: colorError),
       errorMaxLines: 3,
       counterText: '',
+      hintText: hintTextField,
       filled: true,
       fillColor: colorStandard,
       focusedBorder: OutlineInputBorder(

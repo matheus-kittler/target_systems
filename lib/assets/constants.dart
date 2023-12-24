@@ -20,7 +20,7 @@ class Constants {
   static const String PASSWORD_MINIMUM =
       'Sua senha precisa ter no mínimo 2 caracteres';
   static const String EMPTY_LIST = 'Sem anotações';
-// static const String DATA = 'myData';
+  static const String FILLED_FIELD = 'Preencha o campo!';
 // static const String DATA = 'myData';
 // static const String DATA = 'myData';
 }

@@ -56,15 +56,19 @@ class LoginPageState extends State<LoginPage> {
         email: controllerEmail.text,
         password: controllerPassword.text,
       );
-      Navigator.pop(context);
+      pop();
     } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
+      pop();
       if (e.code == invalidCredential) {
         errorLogin(invalidCredentialMsg);
       } else if (e.code == invalidEmail) {
         errorLogin(invalidEmailMsg);
       }
     }
+  }
+
+  pop() {
+    Navigator.pop(context);
   }
 
   void errorLogin(String text) {
@@ -148,21 +152,6 @@ class LoginPageState extends State<LoginPage> {
                   ],
                 )),
                 LaunchUrl(text: policy, url: url)
-                // Align(
-                //   alignment: Alignment.bottomCenter,
-                //   child: InkWell(
-                //     child: Text(
-                //       policy,
-                //       style: TextStyle(
-                //         fontSize: size_16,
-                //         color: colorWhiteText,
-                //       ),
-                //     ),
-                //     onTap: () async {
-                //       launchURL();
-                //     },
-                //   ),
-                // )
               ],
             ),
           ),
