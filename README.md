@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # target_systems
 
 ## Tela de login
@@ -48,5 +48,4 @@ ser perdido ao interagir com a tela.
 * As informações precisam ser salvas e lidas uƟlizando a biblioteca shared_ preferences
 (hƩps://pub.dev/packages/shared_preferences)
 * O Icone de excluir deve abrir um pop-up confirmando a ação.
-* Obrigatório a uƟlização do plugin MOBX para a construção da tela. 
->>>>>>> d7b9e787daa50791b06183af38c46768eedc1fbe
+* Obrigatório a uƟlização do plugin MOBX para a construção da tela.
