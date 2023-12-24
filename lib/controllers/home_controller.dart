@@ -53,9 +53,7 @@ abstract class HomeControllerBase with Store {
 
   @action
   void editItemList(int index, Note note) {
-    list[index].add('${note.title}');
-    // note.title = list[index].title.toString();
-    // list[index].insert(note.title);
+    list[index] = note.title;
     saveListPreferences();
   }
 

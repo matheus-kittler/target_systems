@@ -22,7 +22,7 @@ class HomePageState extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser!;
   late SharedPreferences shared;
   final FocusNode unitCodeCtrlFocusNode = FocusNode();
-  final controller = HomeController();
+  var controller = HomeController();
   TextEditingController textController = TextEditingController();
   var model = Note();
   bool validation = false;
